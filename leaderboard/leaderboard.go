@@ -9,6 +9,7 @@ import (
 	"math"
 	"net/http"
 	"sort"
+	"strconv"
 	"time"
 )
 
@@ -89,6 +90,9 @@ func (l *LeaderBoard) UpdateScores() {
 	maxDay := 0
 
 	for _, member := range l.Event.Members {
+		if member.Name == "" {
+			member.Name = strconv.Itoa(member.Id)
+		}
 		for idx, day := range member.CompletionDayLevels {
 			if _, ok := days[idx]; !ok {
 				days[idx] = &Day{Year: l.Year, Day: idx, MemberScores:make(map[int]*member_score.MemberScore)}
