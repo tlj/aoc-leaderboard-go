@@ -1,0 +1,41 @@
+
+.table thead th.active {
+    font-weight: bold;
+}
+
+.table thead th a {
+    color: inherit;
+}
+
+.table thead th.active a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+td.part1, th.part1,
+td.part2, th.part2,
+td.wtime, th.wtime {
+    text-align: right;
+    width: 6em;
+}
+
+div.menu {
+    margin: 1em 0;
+}
+
+table.narrow {
+    width: 300px;
+}
+
+.totals table {
+    width: 50%;
+    float: left;
+}
+
+div.embed {
+    width: 97%;
+}
+
+div.embed table.embed-list {
+    float: left;
+}

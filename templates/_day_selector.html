@@ -1,0 +1,13 @@
+<div class="menu">
+
+    <a class="btn {{ if eq -1 .day }}btn-primary{{ end }}" href="/topscores">Top Scores</a>
+
+    <a class="btn {{ if eq 0 .day }}btn-primary{{ end }}" href="/day/0/{{ .orderBy }}">Totals</a>
+
+    {{range $i, $_ := N .maxDay }}
+        {{if $i}}
+            <a class="btn {{ if eq $i $.day }}btn-primary{{ end }}" href="/day/{{$i}}/{{ $.orderBy }}">{{$i}}</a>
+        {{end}}
+    {{end}}
+
+</div>

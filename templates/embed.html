@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>Day {{ .day }} ({{ .year }})</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/site.css">
+    </head>
+    <body>
+        <div class="embed">
+            <div class="embed-list">
+                <h2>Fastest today</h2>
+                {{ template "_embed_table.html" .dayScores }}
+            </div>
+            <div class="embed-list">
+                <h2>Totals</h2>
+                {{ template "_embed_table.html" .totalScores }}
+            </div>
+            <div class="embed-list">
+                <h2>Fastest overall</h2>
+                {{ template "_top_scores.html" .topScores }}
+            </div>
+        </div>
+    </body>
+</html>

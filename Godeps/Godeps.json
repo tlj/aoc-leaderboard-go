@@ -1,0 +1,16 @@
+{
+	"ImportPath": "github.com/tlj/aoc-leaderboard-go",
+	"GoVersion": "go1.11",
+	"GodepVersion": "v80",
+	"Deps": [
+		{
+			"ImportPath": "github.com/bradfitz/iter",
+			"Rev": "454541ec3da2a73fc34fd049b19ee5777bf19345"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Comment": "v1.6.2-15-gd2b5d13",
+			"Rev": "d2b5d13b9260193b5a5649e9f47fda645bd2bd1d"
+		}
+	]
+}

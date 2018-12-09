@@ -1,0 +1,49 @@
+<table class="table table-sm table-striped">
+
+    <thead class="thead">
+    <tr>
+        <th scope="col" class="name">
+            <a href="/day/{{ .day }}/name">Name</a>
+        </th>
+        {{ if eq .day 0 }}
+            <th scope="col" class="ogscore">
+                <a href="/day/{{ .day }}/ogscore" title="AoC Global Leaderboard Score">AoC Global</a>
+            </th>
+            <th scope="col" class="olscore">
+                <a href="/day/{{ .day }}/olscore" title="AoC Local Leaderboard Score">AoC Local</a>
+            </th>
+        {{ end }}
+        <th scope="col" class="part1">
+            <a href="/day/{{ .day }}/part1">Part 1 {{ if eq .day 0}}Avg{{ end }}</a>
+        </th>
+        <th scope="col" class="part2">
+            <a href="/day/{{ .day }}/part2diff">Part 2 {{ if eq .day 0}}Avg{{ end }}</a>
+        </th>
+        <th scope="col" class="wtime">
+            <a href="/day/{{ .day }}/wtime">wTime {{ if eq .day 0}}Avg{{ end }}</a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {{ range .scores }}
+        <tr>
+            <td class="name">{{ .Name }}</td>
+            {{ if eq $.day 0 }}
+                <td class="ogscore">{{ .AocGlobalScore }}</td>
+                <td class="olscore">{{ .AocLocalScore }}</td>
+            {{ end }}
+            <td class="part1">{{ .Part1Avg | readableTime }}</td>
+            <td class="part2">
+                {{ if ne .Part2DiffAvg 0 }}
+                    +{{ .Part2DiffAvg | readableTime }}
+                {{ end }}
+            </td>
+            <td class="wtime">
+                {{ if ne .WTimeAvg 0 }}
+                    +{{ .WTimeAvg | readableTime }}
+                {{ end }}
+            </td>
+        </tr>
+    {{ end }}
+    </tbody>
+</table>
