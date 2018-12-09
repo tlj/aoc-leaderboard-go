@@ -1,6 +1,7 @@
 package main
 
 import (
+	handlers2 "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/tlj/aoc-leaderboard-go/handlers"
 	"github.com/tlj/aoc-leaderboard-go/leaderboard"
@@ -17,8 +18,12 @@ func main() {
 	id := os.Getenv("AOC_LEADERBOARD_ID")
 	debug := os.Getenv("AOC_DEBUG")
 
-	if cookie == "" || year == "" || id == "" {
+	if cookie == "" || id == "" {
 		log.Fatal("AOC_SESSION_COOKIE, AOC_YEAR and AOC_LEADERBOARD_ID env variables required.")
+	}
+
+	if year == "" {
+		year = strconv.Itoa(time.Now().Year())
 	}
 
 	var err error
@@ -30,6 +35,8 @@ func main() {
 	if idInt, err = strconv.ParseInt(id, 10, 64); err != nil {
 		log.Fatal("AOC_YEAR has to be int.")
 	}
+
+	log.Printf("Starting leaderboard %d year %d.", idInt, yearInt)
 
 	leaderboard.CurrentBoard = leaderboard.LeaderBoard{
 		SessionCookie: cookie,
@@ -56,7 +63,7 @@ func main() {
 	r.HandleFunc("/embed", handlers.Embed)
 	r.HandleFunc("/topscores", handlers.TopScores)
 	r.HandleFunc("/", handlers.Day)
-	http.Handle("/", r)
+	http.Handle("/", handlers2.CombinedLoggingHandler(os.Stdout, r))
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
