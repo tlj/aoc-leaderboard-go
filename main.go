@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	handlers2 "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/tlj/aoc-leaderboard-go/handlers"
@@ -12,37 +13,42 @@ import (
 	"time"
 )
 
+func getEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
+}
+
+func getEnvNumeric(key string, fallback int64) int64 {
+	if value, ok := os.LookupEnv(key); ok {
+		v, err := strconv.ParseInt(value, 10, 64)
+		if err != nil {
+			log.Fatalf("Error getting env %s as numeric: %v\n", key, err)
+		}
+		return v
+	}
+	return fallback
+}
+
 func main() {
-	cookie := os.Getenv("AOC_SESSION_COOKIE")
-	year := os.Getenv("AOC_YEAR")
-	id := os.Getenv("AOC_LEADERBOARD_ID")
-	debug := os.Getenv("AOC_DEBUG")
+	cookie := getEnv("AOC_SESSION_COOKIE", "")
+	year := getEnvNumeric("AOC_YEAR", int64(time.Now().Year()))
+	id := getEnvNumeric("AOC_LEADERBOARD_ID", 0)
+	debug := getEnvNumeric("AOC_DEBUG", 0)
+	port := getEnvNumeric("HTTP_PORT", 8080)
 
-	if cookie == "" || id == "" {
-		log.Fatal("AOC_SESSION_COOKIE, AOC_YEAR and AOC_LEADERBOARD_ID env variables required.")
+	if cookie == "" || id == 0 {
+		log.Fatal("AOC_SESSION_COOKIE and AOC_LEADERBOARD_ID env variables required.")
 	}
 
-	if year == "" {
-		year = strconv.Itoa(time.Now().Year())
-	}
-
-	var err error
-	var yearInt int64
-	if yearInt, err = strconv.ParseInt(year, 10, 64); err != nil {
-		log.Fatal("AOC_YEAR has to be int.")
-	}
-	var idInt int64
-	if idInt, err = strconv.ParseInt(id, 10, 64); err != nil {
-		log.Fatal("AOC_YEAR has to be int.")
-	}
-
-	log.Printf("Starting leaderboard %d year %d.", idInt, yearInt)
+	log.Printf("Starting leaderboard %d year %d.", id, year)
 
 	leaderboard.CurrentBoard = leaderboard.LeaderBoard{
 		SessionCookie: cookie,
-		Year: yearInt,
-		Id: idInt,
-		Debug: debug == "1",
+		Year: year,
+		Id: id,
+		Debug: debug == 1,
 	}
 	leaderboard.CurrentBoard.UpdateFromSource()
 
@@ -65,5 +71,6 @@ func main() {
 	r.HandleFunc("/", handlers.Day)
 	http.Handle("/", handlers2.CombinedLoggingHandler(os.Stdout, r))
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Printf("Listening to port %d.\n", port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
 }
