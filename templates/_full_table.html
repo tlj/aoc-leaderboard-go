@@ -12,6 +12,7 @@
             <th scope="col" class="olscore">
                 <a href="/day/{{ .day }}/olscore" title="AoC Local Leaderboard Score">AoC Local</a>
             </th>
+            <th scope="col" class="days">Days</th>
         {{ end }}
         <th scope="col" class="part1">
             <a href="/day/{{ .day }}/part1">Part 1 {{ if eq .day 0}}Avg{{ end }}</a>
@@ -28,6 +29,7 @@
             {{ if eq $.day 0 }}
                 <td class="ogscore">{{ .AocGlobalScore }}</td>
                 <td class="olscore">{{ .AocLocalScore }}</td>
+                <td class="days">{{ .Count }}</td>
             {{ end }}
             <td class="part1">{{ .Part1Avg | readableTime }}</td>
             <td class="part2">

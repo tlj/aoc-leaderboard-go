@@ -80,6 +80,10 @@ func (a ByAocGlobalScore) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 type ByPart2Diff []*MemberScore
 func (a ByPart2Diff) Len() int { return len(a) }
 func (a ByPart2Diff) Less(i, j int) bool {
+	if a[i].Count != a[j].Count {
+		return a[i].Count > a[j].Count
+	}
+
 	if a[i].Part2Diff() == -1 && a[j].Part2Diff() > -1 {
 		return false
 	}

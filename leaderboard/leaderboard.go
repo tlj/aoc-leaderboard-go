@@ -99,9 +99,7 @@ func (l *LeaderBoard) UpdateScores() {
 
 	completedTotals := make(map[int]*member_score.MemberScore)
 	for id, member := range totals {
-		if member.Count == int64(maxDay) {
-			completedTotals[id] = member
-		}
+		completedTotals[id] = member
 	}
 
 	l.MaxDay = int64(maxDay)
