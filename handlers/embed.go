@@ -24,8 +24,8 @@ func Embed(w http.ResponseWriter, r *http.Request) {
 		dailyMemberScores = append(dailyMemberScores, memberScore)
 	}
 
-	sort.Sort(member_score.ByWTime(totalMemberScores))
-	sort.Sort(member_score.ByWTime(dailyMemberScores))
+	sort.Sort(member_score.ByPart2Diff(totalMemberScores))
+	sort.Sort(member_score.ByPart2Diff(dailyMemberScores))
 
 	if len(dailyMemberScores) > 10 {
 		dailyMemberScores = dailyMemberScores[:10]

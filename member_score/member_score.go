@@ -11,7 +11,6 @@ type MemberScore struct {
 	AocLocalScore int
 	AocGlobalScore int
 	Count int64
-	WTime int64
 }
 
 func (m MemberScore) Part1Avg() int64 {
@@ -30,13 +29,6 @@ func (m MemberScore) Part2DiffAvg() int64 {
 		return 0
 	}
 	return m.Part2Diff() / m.Count
-}
-
-func (m MemberScore) WTimeAvg() int64 {
-	if m.WTime < 1 {
-		return 0
-	}
-	return m.WTime / m.Count
 }
 
 func (m MemberScore) Part2Diff() int64 {
@@ -103,20 +95,3 @@ func (a ByPart2Diff) Less(i, j int) bool {
 }
 func (a ByPart2Diff) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 
-type ByWTime []*MemberScore
-func (a ByWTime) Len() int { return len(a) }
-func (a ByWTime) Less(i, j int) bool {
-	if a[i].WTime == 0 && a[j].WTime > 0 {
-		return false
-	}
-	if a[i].WTime > -1 && a[j].WTime == 0 {
-		return true
-	}
-
-	if a[i].WTime == a[j].WTime {
-		return a[i].Part2Diff() < a[j].Part2Diff()
-	}
-
-	return a[i].WTime < a[j].WTime
-}
-func (a ByWTime) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }

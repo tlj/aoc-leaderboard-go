@@ -19,9 +19,6 @@
         <th scope="col" class="part2">
             <a href="/day/{{ .day }}/part2diff">Part 2 {{ if eq .day 0}}Avg{{ end }}</a>
         </th>
-        <th scope="col" class="wtime">
-            <a href="/day/{{ .day }}/wtime">wTime {{ if eq .day 0}}Avg{{ end }}</a>
-        </th>
     </tr>
     </thead>
     <tbody>
@@ -36,11 +33,6 @@
             <td class="part2">
                 {{ if ne .Part2DiffAvg 0 }}
                     +{{ .Part2DiffAvg | readableTime }}
-                {{ end }}
-            </td>
-            <td class="wtime">
-                {{ if ne .WTimeAvg 0 }}
-                    +{{ .WTimeAvg | readableTime }}
                 {{ end }}
             </td>
         </tr>

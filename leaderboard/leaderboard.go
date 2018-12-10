@@ -43,46 +43,6 @@ func (d Day) DayStartsAt() int64 {
 	return t.Unix()
 }
 
-func (l *LeaderBoard) ApplyPenalties() {
-	for _, day := range l.Days {
-		fastestMember := member_score.MemberScore{Part2: 1000000, Part1: 1000000}
-		for _, member := range day.MemberScores {
-			if member.Part1 < fastestMember.Part1 && member.Part2 > 0 && member.Part1 > 0 {
-				fastestMember = *member
-			}
-		}
-
-		penaltyTreshold := fastestMember.Part1 * 2
-		maxPenalty := fastestMember.Part2Diff() / 2
-
-		for _, member := range day.MemberScores {
-			if member.Part2 == 0 {
-				continue
-			}
-			if member.Id != fastestMember.Id {
-				penalty := int64(0)
-				if member.Part1 > penaltyTreshold {
-					startDiff := member.Part1 - penaltyTreshold
-					if startDiff > 0 {
-						penalty = startDiff / 20
-
-						if penalty > maxPenalty {
-							penalty = maxPenalty
-						}
-
-					}
-				}
-				member.WTime = member.Part2Diff() + penalty
-			} else {
-				member.WTime = member.Part2Diff()
-			}
-			if _, ok := l.Totals[member.Id]; ok {
-				l.Totals[member.Id].WTime += member.WTime
-			}
-		}
-	}
-}
-
 func (l *LeaderBoard) UpdateScores() {
 	days := make(map[int]*Day)
 	totals := make(map[int]*member_score.MemberScore)
@@ -148,9 +108,8 @@ func (l *LeaderBoard) UpdateScores() {
 	l.Days = days
 	l.Totals = completedTotals
 	l.TopScores = topScores
-	l.ApplyPenalties()
 
-	sort.Sort(member_score.ByWTime(topScores))
+	sort.Sort(member_score.ByPart2Diff(topScores))
 }
 
 func (l *LeaderBoard) UpdateFromSource() {

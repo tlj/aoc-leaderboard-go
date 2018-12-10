@@ -6,7 +6,6 @@
             <th scope="col" class="day">Day</th>
             <th scope="col" class="part1">Part 1</th>
             <th scope="col" class="part2">Part 2</th>
-            <th scope="col" class="wtime">wTime</th>
         </tr>
     </thead>
 
@@ -17,7 +16,6 @@
             <td class="day">{{ .Day }}</td>
             <td class="part1">{{ .Part1 | readableTime }}</td>
             <td class="part2">{{ .Part2Diff | readableTime }}</td>
-            <td class="part2">{{ .WTime | readableTime }}</td>
         </tr>
     {{ end }}
     </tbody>

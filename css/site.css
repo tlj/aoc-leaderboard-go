@@ -13,8 +13,7 @@
 }
 
 td.part1, th.part1,
-td.part2, th.part2,
-td.wtime, th.wtime {
+td.part2, th.part2 {
     text-align: right;
     width: 6em;
 }

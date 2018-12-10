@@ -42,7 +42,7 @@ func Day(w http.ResponseWriter, r *http.Request) {
 
 	orderBy, ok := vars["orderBy"]
 	if !ok {
-		orderBy = "wtime"
+		orderBy = "part2diff"
 	}
 
 	if orderBy == "part2diff" {
@@ -57,8 +57,6 @@ func Day(w http.ResponseWriter, r *http.Request) {
 		sort.Sort(member_score.ByAocLocalScore(memberScores))
 	} else if orderBy == "name" {
 		sort.Sort(member_score.ByName(memberScores))
-	} else if orderBy == "wtime" {
-		sort.Sort(member_score.ByWTime(memberScores))
 	} else {
 		sort.Sort(member_score.ByPart2Diff(memberScores))
 		orderBy = "part2diff"
