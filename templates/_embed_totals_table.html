@@ -1,0 +1,26 @@
+<table class="table table-sm table-striped">
+
+    <thead class="thead">
+    <tr>
+        <th scope="col" class="name">Name</th>
+        <th scope="col" class="day">Days</th>
+        <th scope="col" class="part1">Part 1</th>
+        <th scope="col" class="part2">Part 2</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {{ range . }}
+        <tr>
+            <td class="name">{{ .Name }}</td>
+            <td class="day">{{ .Count }}</td>
+            <td class="part1">{{ .Part1 | readableTime }}</td>
+            <td class="part2">
+                {{ if ne .Part2DiffAvg 0 }}
+                    +{{ .Part2DiffAvg | readableTime }}
+                {{ end }}
+            </td>
+        </tr>
+    {{ end }}
+    </tbody>
+</table>

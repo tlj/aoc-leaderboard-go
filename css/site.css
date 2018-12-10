@@ -13,7 +13,8 @@
 }
 
 td.part1, th.part1,
-td.part2, th.part2 {
+td.part2, th.part2,
+td.day, th.day {
     text-align: right;
     width: 6em;
 }
